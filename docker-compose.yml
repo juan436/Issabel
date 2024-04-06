@@ -10,7 +10,8 @@ services:
 #        build: ./
         restart: always
         container_name: pbx_issabel
-        network_mode: host
+        networks:
+          - macvlan_bridge
         cap_add: 
           - NET_ADMIN
         privileged: true
@@ -46,7 +47,11 @@ services:
           - "issabel-data:/var/lib"
           - "./httpd.conf:/etc/httpd/conf/httpd.conf"
           - "./ssl.conf:/etc/httpd/conf.d/ssl.conf"
-
+networks:
+  macvlan_bridge:
+    external: true
+    name: macvlan_bridge
+    
 volumes:
   issabel-etc:
   issabel-data:
